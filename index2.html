@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rare Criminal Cases - Criminology Research</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #05080f;
+            --bg-elevated: #0a1019;
+            --bg-card: #0f1621;
+            --accent-emerald: #10b981;
+            --accent-teal: #14b8a6;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --text-bright: #f1f5f9;
+            --text-normal: #94a3b8;
+            --text-dim: #475569;
+            --border-subtle: #1e293b;
+            --border-accent: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-normal);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .font-serif {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        /* Animated Background */
+        .bg-atmosphere {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: 
+                radial-gradient(ellipse 100% 100% at 0% 0%, rgba(16, 185, 129, 0.03) 0%, transparent 50%),
+                radial-gradient(ellipse 80% 80% at 100% 100%, rgba(20, 184, 166, 0.02) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 60% at 50% 0%, rgba(245, 158, 11, 0.02) 0%, transparent 40%);
+            animation: atmosphereShift 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes atmosphereShift {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image: 
+                linear-gradient(rgba(30, 41, 59, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(30, 41, 59, 0.3) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(5, 8, 15, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .nav-inner {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-mark {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-emerald), var(--accent-teal));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-mark::before {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: var(--bg-deep);
+            border-radius: 8px;
+        }
+
+        .logo-mark svg {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-bright);
+            letter-spacing: -0.5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .nav-link {
+            padding: 8px 12px;
+            color: var(--text-dim);
+            font-size: 12px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-link:hover {
+            color: var(--text-bright);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .nav-link.active {
+            color: var(--accent-emerald);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 2px;
+            background: var(--accent-emerald);
+            border-radius: 2px;
+        }
+
+        /* Mobile Toggle */
+        .hamburger {
+            display: none;
+            width: 44px;
+            height: 44px;
+            background: transparent;
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            cursor: pointer;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .hamburger:hover {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: var(--accent-emerald);
+        }
+
+        .hamburger span {
+            width: 20px;
+            height: 2px;
+            background: var(--text-normal);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+
+        .hamburger.open span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 64px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-deep);
+            z-index: 999;
+            padding: 20px;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-nav.open {
+            transform: translateX(0);
+        }
+
+        .mobile-section-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            padding: 16px 12px 8px;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 8px;
+        }
+
+        .mobile-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            color: var(--text-normal);
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 10px;
+            margin-bottom: 4px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
+            transition: all 0.2s ease;
+        }
+
+        .mobile-nav-link:hover {
+            background: var(--bg-card);
+            border-color: var(--accent-emerald);
+            color: var(--text-bright);
+        }
+
+        .mobile-nav-link.active {
+            border-color: var(--accent-emerald);
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-emerald);
+        }
+
+        .case-num-mini {
+            width: 28px;
+            height: 28px;
+            background: rgba(16, 185, 129, 0.15);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent-emerald);
+        }
+
+        /* Title Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 60px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 720px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-emerald);
+            margin-bottom: 28px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(40px, 8vw, 64px);
+            font-weight: 700;
+            color: var(--text-bright);
+            line-height: 1.1;
+            margin-bottom: 16px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.7s ease 0.1s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--text-dim);
+            margin-bottom: 48px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.7s ease 0.2s forwards;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-card {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            overflow: hidden;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.7s ease 0.3s forwards;
+        }
+
+        .info-card-header {
+            padding: 20px 28px;
+            background: rgba(16, 185, 129, 0.05);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .info-card-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-emerald);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-card-body {
+            padding: 8px 0;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 14px 28px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: background 0.2s ease;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-row:hover {
+            background: rgba(16, 185, 129, 0.03);
+        }
+
+        .info-key {
+            color: var(--text-dim);
+            font-size: 13px;
+        }
+
+        .info-val {
+            color: var(--text-bright);
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .hero-note {
+            margin-top: 32px;
+            padding: 16px 24px;
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.15);
+            border-radius: 12px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.7s ease 0.4s forwards;
+        }
+
+        .hero-note p {
+            color: var(--accent-amber);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Section */
+        .section {
+            padding: 80px 20px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 48px;
+            text-align: center;
+        }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            margin-bottom: 20px;
+        }
+
+        .section-tag svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--accent-emerald);
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(32px, 5vw, 44px);
+            font-weight: 700;
+            color: var(--text-bright);
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        .section-desc {
+            color: var(--text-dim);
+            font-size: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Case Cards */
+        .case-card {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 32px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.5s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .case-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .case-card:hover {
+            border-color: rgba(16, 185, 129, 0.4);
+            box-shadow: 
+                0 0 0 1px rgba(16, 185, 129, 0.1),
+                0 20px 50px -20px rgba(0, 0, 0, 0.5);
+        }
+
+        .case-top {
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 16px;
+            background: linear-gradient(180deg, rgba(16, 185, 129, 0.03) 0%, transparent 100%);
+        }
+
+        .case-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .badge-closed {
+            background: rgba(244, 63, 94, 0.12);
+            color: #fb7185;
+            border: 1px solid rgba(244, 63, 94, 0.2);
+        }
+
+        .badge-ongoing {
+            background: rgba(16, 185, 129, 0.12);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .badge-unsolved {
+            background: rgba(245, 158, 11, 0.12);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .badge-ongoing .badge-dot,
+        .badge-unsolved .badge-dot {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .case-year {
+            color: var(--text-dim);
+            font-size: 12px;
+            font-weight: 500;
+            background: var(--bg-card);
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
+
+        .case-number {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-dim);
+            background: var(--bg-card);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .case-body {
+            padding: 28px;
+        }
+
+        .case-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 8px;
+            line-height: 1.25;
+        }
+
+        .case-subtitle {
+            color: var(--accent-emerald);
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .case-content {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            line-height: 1.9;
+            color: var(--text-normal);
+        }
+
+        .case-content p {
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .case-content strong {
+            color: var(--accent-emerald);
+            font-weight: 700;
+        }
+
+        .case-footer {
+            padding: 24px 28px;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .info-item {
+            padding: 16px;
+            background: var(--bg-elevated);
+            border-radius: 10px;
+            border: 1px solid var(--border-subtle);
+            transition: all 0.2s ease;
+        }
+
+        .info-item:hover {
+            border-color: var(--accent-emerald);
+            background: rgba(16, 185, 129, 0.03);
+        }
+
+        .info-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+        }
+
+        .info-value {
+            font-size: 13px;
+            color: var(--text-bright);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .status-closed { color: #fb7185; }
+        .status-ongoing { color: #34d399; }
+        .status-unsolved { color: #fbbf24; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid var(--border-subtle);
+            background: linear-gradient(180deg, transparent 0%, rgba(16, 185, 129, 0.02) 100%);
+        }
+
+        .footer-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 8px;
+        }
+
+        .footer-detail {
+            color: var(--text-dim);
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .case-top {
+                padding: 20px;
+            }
+
+            .case-body {
+                padding: 20px;
+            }
+
+            .case-footer {
+                padding: 20px;
+            }
+
+            .case-title {
+                font-size: 22px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .info-row {
+                flex-direction: column;
+                gap: 4px;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            .case-card,
+            .hero-badge,
+            .hero-title,
+            .hero-subtitle,
+            .info-card,
+            .hero-note {
+                opacity: 1;
+                transform: none;
+                animation: none;
+                transition: none;
+            }
+
+            .bg-atmosphere {
+                animation: none;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-accent);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-dim);
+        }
+
+        /* Scroll Progress */
+        .scroll-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-emerald), var(--accent-teal));
+            z-index: 1001;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-atmosphere"></div>
+    <div class="bg-grid"></div>
+    <div class="scroll-bar" id="scrollBar"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-inner">
+            <a href="#title" class="logo">
+                <div class="logo-mark">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <span class="logo-text">Rare Case Files</span>
+            </a>
+
+            <div class="nav-menu">
+                <a href="#title" class="nav-link active">Home</a>
+                <a href="#case1" class="nav-link">Nuremberg</a>
+                <a href="#case2" class="nav-link">Manson</a>
+                <a href="#case3" class="nav-link">Dahmer</a>
+                <a href="#case4" class="nav-link">Zainab</a>
+                <a href="#case5" class="nav-link">APS Attack</a>
+                <a href="#case6" class="nav-link">Noor Mukadam</a>
+                <a href="#case7" class="nav-link">Sahiwal</a>
+                <a href="#case8" class="nav-link">Motorway</a>
+            </div>
+
+            <button class="hamburger" id="hamburger" onclick="toggleMobile()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <div class="mobile-section-title">International Cases</div>
+        <a href="#case1" class="mobile-nav-link" onclick="closeMobile()">
+            <span class="case-num-mini">01</span>
+            Nuremberg Trials
+        </a>
+        <a href="#case2" class="mobile-nav-link" onclick="closeMobile()">
+            <span class="case-num-mini">02</span>
+            Charles Manson Murders
+        </a>
+        <a href="#case3" class="mobile-nav-link" onclick="closeMobile()">
+            <span class="case-num-mini">03</span>
+            Jeffrey Dahmer Case
+        </a>
+        
+        <div class="mobile-section-title">National Cases - Pakistan</div>
+        <a href="#case4" class="mobile-nav-link" onclick="closeMobile()">
+            <span class="case-num-mini">04</span>
+            Zainab Ansari Murder
+        </a>
+        <a href="#case5" class="mobile-nav-link" onclick="closeMobile()">
+            <span class="case-num-mini">05</span>
+            APS Peshawar Attack
+        </a>
+        <a href="#case6" class="mobile-nav-link" onclick="closeMobile()">
+            <span class="case-num-mini">06</span>
+            Noor Mukadam Murder
+        </a>
+        <a href="#case7" class="mobile-nav-link" onclick="closeMobile()">
+            <span class="case-num-mini">07</span>
+            Sahiwal Shootout
+        </a>
+        <a href="#case8" class="mobile-nav-link" onclick="closeMobile()">
+            <span class="case-num-mini">08</span>
+            Sialkot Motorway
+        </a>
+    </div>
+
+    <!-- Hero / Title Section -->
+    <section class="hero-section" id="title">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                Department of Criminology
+            </div>
+            
+            <h1 class="hero-title">Rare Criminal Cases Research</h1>
+            <p class="hero-subtitle">8 Impactful Cases That Shaped Human History & Legal Frameworks</p>
+
+            <div class="info-card">
+                <div class="info-card-header">
+                    <h3>Student Information</h3>
+                </div>
+                <div class="info-card-body">
+                    <div class="info-row">
+                        <span class="info-key">Student Name</span>
+                        <span class="info-val">Muhammad Younis</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Father Name</span>
+                        <span class="info-val">Ali Ahmed</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Seat No</span>
+                        <span class="info-val">22</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Class</span>
+                        <span class="info-val">BS Criminology 1st Year</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Semester</span>
+                        <span class="info-val">1st Semester</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Subject</span>
+                        <span class="info-val">Research Writing</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-note">
+                <p>Research Writing Assignment - Analysis of 8 Rare Criminal Cases</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- International Cases -->
+    <section class="section" id="international">
+        <div class="section-header">
+            <div class="section-tag">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="2" y1="12" x2="22" y2="12"/>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+                International Cases
+            </div>
+            <h2 class="section-title">Rare Global Criminal Cases</h2>
+            <p class="section-desc">Three rare international criminal cases that had devastating impact on human life and shaped global legal history forever.</p>
+        </div>
+
+        <!-- Case 1: Nuremberg Trials -->
+        <article class="case-card" id="case1">
+            <div class="case-top">
+                <div class="case-meta">
+                    <span class="badge badge-closed"><span class="badge-dot"></span>Closed</span>
+                    <span class="case-year">1945-1946</span>
+                </div>
+                <span class="case-number">Case 01</span>
+            </div>
+            <div class="case-body">
+                <h3 class="case-title">The Nuremberg Trials</h3>
+                <p class="case-subtitle">Military Tribunal - Post World War II | Germany</p>
+                <div class="case-content">
+                    <p>The Nuremberg Trials were a series of military tribunals held after World War II by the Allied forces under international law and the laws of war. The trials were most notable for the prosecution of prominent members of the political, military, judicial, and economic leadership of Nazi Germany, who planned, carried out, or otherwise participated in the Holocaust and other war crimes. This was the first time in history that government leaders were held internationally accountable for their actions during wartime.</p>
+                    <p>The first and best-known trial was that of 24 major political and military leaders before the International Military Tribunal (IMT). Notable defendants included Hermann Goring, Rudolf Hess, Joachim von Ribbentrop, and others. Of the 24 defendants, 12 were sentenced to death, 3 to life imprisonment, 4 to lesser prison terms, and 3 were acquitted. The trials established the principles that individuals, not just states, can be held responsible for war crimes and crimes against humanity.</p>
+                    <p><strong>Impact on Human Life:</strong> The trials fundamentally changed international law by establishing that following orders is not a valid defense for war crimes. They led to the creation of the Nuremberg Code for medical ethics and paved the way for modern international criminal courts including the International Criminal Court (ICC). The trials documented the systematic murder of approximately 6 million Jews and millions of others, bringing accountability to perpetrators of genocide and establishing precedents for modern human rights law.</p>
+                </div>
+            </div>
+            <div class="case-footer">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Court</div>
+                        <div class="info-value">International Military Tribunal, Nuremberg, Germany</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Chief Prosecutors</div>
+                        <div class="info-value">Robert H. Jackson (USA), Hartley Shawcross (UK), Roman Rudenko (USSR)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Defense Attorneys</div>
+                        <div class="info-value">Otto Kranzbuhler, Robert Servatius, Dr. Otto Nelte, Dr. Alfred Thoma</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Case Files Location</div>
+                        <div class="info-value">National Archives (Washington D.C.), International Court of Justice (Hague, Netherlands)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Current Status</div>
+                        <div class="info-value status-closed">Closed - Concluded October 1, 1946</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Historical Significance</div>
+                        <div class="info-value">Established modern international criminal law</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Case 2: Charles Manson -->
+        <article class="case-card" id="case2">
+            <div class="case-top">
+                <div class="case-meta">
+                    <span class="badge badge-closed"><span class="badge-dot"></span>Closed</span>
+                    <span class="case-year">1969-1971</span>
+                </div>
+                <span class="case-number">Case 02</span>
+            </div>
+            <div class="case-body">
+                <h3 class="case-title">Charles Manson & The Manson Family Murders</h3>
+                <p class="case-subtitle">Tate-LaBianca Murders | Los Angeles, California, USA</p>
+                <div class="case-content">
+                    <p>The Manson Family murders were a series of killings carried out by followers of Charles Manson in August 1969. The most famous victim was actress Sharon Tate, wife of director Roman Polanski, who was 8 months pregnant when murdered. Over two nights, Manson's followers killed 7 people including Tate, coffee heiress Abigail Folger, and supermarket executive Leno LaBianca and his wife Rosemary. The murders shocked America and marked the end of the 1960s peace movement.</p>
+                    <p>Charles Manson, a charismatic cult leader, orchestrated the murders but did not personally kill any of the victims. He convinced his followers that a race war was coming, which he called "Helter Skelter." The trial was one of the most publicized in American history. Manson and four of his followers (Susan Atkins, Patricia Krenwinkel, Leslie Van Houten, and Tex Watson) were originally sentenced to death, but their sentences were commuted to life when California abolished the death penalty in 1972.</p>
+                    <p><strong>Impact on Human Life:</strong> The case fundamentally changed American culture and the public's perception of safety. It ended the idealism of the 1960s counterculture movement and introduced the concept of a "charismatic manipulator" criminal. The case led to increased security measures for celebrities, changes in how parole hearings are conducted, and Manson became a symbol of evil in American culture. Leslie Van Houten was paroled in 2023 after 53 years, sparking debate about justice and rehabilitation.</p>
+                </div>
+            </div>
+            <div class="case-footer">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Court</div>
+                        <div class="info-value">Superior Court of Los Angeles County, California</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Prosecutor</div>
+                        <div class="info-value">Vincent Bugliosi (Deputy District Attorney)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Defense Attorneys</div>
+                        <div class="info-value">Irving Kanarek (Manson), Paul Fitzgerald, Ronald Hughes, Daye Shinn</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Case Files Location</div>
+                        <div class="info-value">Los Angeles County Superior Court Archives, California State Archives</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Current Status</div>
+                        <div class="info-value status-closed">Closed - Manson died in prison November 19, 2017</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Notable Outcome</div>
+                        <div class="info-value">Life imprisonment without possibility of parole</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Case 3: Jeffrey Dahmer -->
+        <article class="case-card" id="case3">
+            <div class="case-top">
+                <div class="case-meta">
+                    <span class="badge badge-closed"><span class="badge-dot"></span>Closed</span>
+                    <span class="case-year">1991-1992</span>
+                </div>
+                <span class="case-number">Case 03</span>
+            </div>
+            <div class="case-body">
+                <h3 class="case-title">Jeffrey Dahmer Serial Murder Case</h3>
+                <p class="case-subtitle">Milwaukee Cannibal Murders | Milwaukee, Wisconsin, USA</p>
+                <div class="case-content">
+                    <p>Jeffrey Dahmer was an American serial killer and sex offender who murdered 17 men and boys between 1978 and 1991. His crimes included necrophilia, dismemberment, and cannibalism. Dahmer's victims were primarily young men, many of whom were from marginalized communities including immigrants and people of color. He was caught when one of his intended victims, Tracy Edwards, escaped and flagged down police officers, leading them to Dahmer's apartment where they discovered photographic evidence of dismembered bodies and human remains.</p>
+                    <p>The trial lasted from January to February 1992. Dahmer pleaded guilty but insane to 15 counts of murder. The defense argued he was legally insane due to necrophilia and other disorders, while the prosecution argued he knew right from wrong. The jury found him sane and guilty on all counts. He was sentenced to 15 consecutive life terms (936 years total). Dahmer was beaten to death by a fellow inmate, Christopher Scarver, in prison on November 28, 1994.</p>
+                    <p><strong>Impact on Human Life:</strong> The Dahmer case led to significant changes in law enforcement practices, particularly regarding missing persons cases in marginalized communities. It exposed failures in the Milwaukee Police Department - officers had actually returned one of Dahmer's escaped victims (14-year-old Konerak Sinthasomphone) to him. The case led to reforms in how police handle reports of missing young men and boys, improved coordination between law enforcement agencies, and greater awareness of serial offender patterns.</p>
+                </div>
+            </div>
+            <div class="case-footer">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Court</div>
+                        <div class="info-value">Milwaukee County Circuit Court, Wisconsin</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Prosecutor</div>
+                        <div class="info-value">Michael McCann (Milwaukee County District Attorney)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Defense Attorneys</div>
+                        <div class="info-value">Gerald Boyle, Wendy Patrickus, Catherine Doyle</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Case Files Location</div>
+                        <div class="info-value">Milwaukee County Circuit Court Archives, Wisconsin State Historical Society</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Current Status</div>
+                        <div class="info-value status-closed">Closed - Dahmer killed in prison November 28, 1994</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Victim Count</div>
+                        <div class="info-value">17 confirmed murders (1978-1991)</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <!-- National Cases -->
+    <section class="section" id="national">
+        <div class="section-header">
+            <div class="section-tag">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+                    <line x1="4" y1="22" x2="4" y2="15"/>
+                </svg>
+                National Cases - Pakistan
+            </div>
+            <h2 class="section-title">Rare Pakistani Criminal Cases</h2>
+            <p class="section-desc">Five rare Pakistani criminal cases that shocked the nation and led to significant legal reforms.</p>
+        </div>
+
+        <!-- Case 4: Zainab Ansari -->
+        <article class="case-card" id="case4">
+            <div class="case-top">
+                <div class="case-meta">
+                    <span class="badge badge-closed"><span class="badge-dot"></span>Closed</span>
+                    <span class="case-year">2018</span>
+                </div>
+                <span class="case-number">Case 04</span>
+            </div>
+            <div class="case-body">
+                <h3 class="case-title">Zainab Ansari Murder Case</h3>
+                <p class="case-subtitle">Child Abuse, Rape and Murder | Kasur, Punjab, Pakistan</p>
+                <div class="case-content">
+                    <p>Zainab Ansari, a 7-year-old girl from Kasur, Punjab, was abducted on January 4, 2018 while walking to her Quran class. Her body was found in a trash heap on January 9, 2018, showing signs of brutal sexual assault and strangulation. The case sparked nationwide outrage and massive protests across Pakistan. Heartbreakingly, Zainab was the 12th child to be found murdered in Kasur within a two-year period, exposing a pattern of systematic child abuse in the region.</p>
+                    <p>The accused, Imran Ali, a 24-year-old neighbor, was arrested through DNA matching which linked him to at least 8 other child murders in the area. He confessed to the crime along with multiple other child murders. An Anti-Terrorism Court (ATC) in Lahore sentenced him to death on four counts, life imprisonment on two counts, and fines totaling 3.1 million rupees. Imran Ali was executed at Kot Lakhpat Jail, Lahore, on October 17, 2018 - just 10 months after the crime.</p>
+                    <p><strong>Impact on Human Life:</strong> This heartbreaking case exposed a horrific network of child abuse in Kasur and led to the landmark Zainab Alert, Response and Recovery Act, 2020. The law established a nationwide emergency response system for missing children, created the National Emergency Helpline 1123, mandated sex offender registries, and brought child protection issues to national prominence. The case resulted in significant public awareness, demands for stronger child protection laws, and exposed failures in the local police response to missing children.</p>
+                </div>
+            </div>
+            <div class="case-footer">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Court</div>
+                        <div class="info-value">Anti-Terrorism Court (ATC), Lahore, Punjab</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Prosecution</div>
+                        <div class="info-value">Special Public Prosecutor Abdul Rauf Anwar, Punjab Government</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Defense Lawyer</div>
+                        <div class="info-value">Sultan Azam (State-appointed counsel)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Case Files Location</div>
+                        <div class="info-value">Anti-Terrorism Court Archives, Lahore; Supreme Court of Pakistan Registry</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Current Status</div>
+                        <div class="info-value status-closed">Closed - Convicted & Executed October 17, 2018</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Legislation Passed</div>
+                        <div class="info-value">Zainab Alert, Response and Recovery Act, 2020</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Case 5: APS Attack -->
+        <article class="case-card" id="case5">
+            <div class="case-top">
+                <div class="case-meta">
+                    <span class="badge badge-closed"><span class="badge-dot"></span>Closed</span>
+                    <span class="case-year">2014-2015</span>
+                </div>
+                <span class="case-number">Case 05</span>
+            </div>
+            <div class="case-body">
+                <h3 class="case-title">Army Public School Peshawar Attack Case</h3>
+                <p class="case-subtitle">Terrorist Attack on School | Peshawar, Khyber Pakhtunkhwa, Pakistan</p>
+                <div class="case-content">
+                    <p>On December 16, 2014, seven heavily armed terrorists from the Tehrik-i-Taliban Pakistan (TTP) attacked the Army Public School in Peshawar. In one of the deadliest terrorist attacks in Pakistan's history, 149 people were killed including 132 schoolchildren aged 8-18 years, and 17 staff members. More than 120 were injured. The attackers went classroom to classroom, shooting students and teachers. The siege lasted 8 hours before all terrorists were killed by the Pakistan Army's Special Services Group (SSG).</p>
+                    <p>The attack was planned in Afghanistan, and the mastermind was identified as Umar Mansoor, also known as "Umar Naray." The seven attackers were foreigners including Chechens, Arabs, and Afghans. In August 2015, an Anti-Terrorism Court convicted 31 people in connection with the attack - 4 were sentenced to death, 3 to life imprisonment, and 24 to varying prison terms. Additionally, several TTP commanders involved in planning were killed in military operations.</p>
+                    <p><strong>Impact on Human Life:</strong> The APS attack was a watershed moment in Pakistan's history. It led to the National Action Plan against terrorism, lifting the moratorium on the death penalty, establishment of military courts for terrorism cases, and the Karachi Operation against militant groups. The tragedy unified Pakistan against terrorism and led to the formation of the National Counter Terrorism Authority (NACTA). December 16 is now observed as a day of national mourning. The attack fundamentally changed Pakistan's approach to counter-terrorism.</p>
+                </div>
+            </div>
+            <div class="case-footer">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Court</div>
+                        <div class="info-value">Anti-Terrorism Court (ATC), Peshawar; Military Courts</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Prosecution</div>
+                        <div class="info-value">Pakistan Army JAG Branch, Federal Investigation Agency (FIA)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Case Files Location</div>
+                        <div class="info-value">ATC Archives Peshawar; GHQ Rawalpindi; Supreme Court Registry</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Current Status</div>
+                        <div class="info-value status-closed">Closed - 4 convicts executed, others imprisoned</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Casualties</div>
+                        <div class="info-value">149 killed (132 children, 17 staff), 120+ injured</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">National Response</div>
+                        <div class="info-value">National Action Plan, Military Courts established</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Case 6: Noor Mukadam -->
+        <article class="case-card" id="case6">
+            <div class="case-top">
+                <div class="case-meta">
+                    <span class="badge badge-closed"><span class="badge-dot"></span>Closed</span>
+                    <span class="case-year">2021-2022</span>
+                </div>
+                <span class="case-number">Case 06</span>
+            </div>
+            <div class="case-body">
+                <h3 class="case-title">Noor Mukadam Murder Case</h3>
+                <p class="case-subtitle">High-Profile Beheading Murder | Islamabad, Pakistan</p>
+                <div class="case-content">
+                    <p>Noor Mukadam, the 27-year-old daughter of former Pakistani diplomat Shaukat Mukadam, was brutally murdered on July 20, 2021, in Islamabad. She was beheaded with a sharp instrument at the residence of Zahir Jaffer, a Pakistani-American man from an influential family. Jaffer had held Noor hostage for two days before killing her when she attempted to escape. The case shocked the nation due to its brutality and the privileged background of the perpetrator.</p>
+                    <p>Zahir Jaffer was arrested at the crime scene. The trial was fast-tracked due to immense public pressure and media attention. In February 2022, an Additional Sessions Judge sentenced Zahir Jaffer to death for murder and 10 years imprisonment for rape. His parents and three employees were also convicted for abetment and evidence tampering. The Islamabad High Court upheld the death sentence in March 2023. Appeals are currently pending in the Supreme Court of Pakistan.</p>
+                    <p><strong>Impact on Human Life:</strong> The Noor Mukadam case brought national attention to violence against women in Pakistan and the issue of privilege and influence in the justice system. It led to increased demands for stronger domestic violence laws and better protection for women. The case demonstrated that even influential families cannot escape justice. It sparked nationwide protests and the "Justice for Noor" movement, leading to greater awareness about femicide and the need for legal reforms to protect women from gender-based violence.</p>
+                </div>
+            </div>
+            <div class="case-footer">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Court</div>
+                        <div class="info-value">Additional Sessions Court, Islamabad; Islamabad High Court</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Prosecution</div>
+                        <div class="info-value">Shah Khawar (Additional Advocate General), Sajid Cheema (FIA)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Defense Attorneys</div>
+                        <div class="info-value">Sikandar Zulqarnain Salam, Shah Nawaz Ismail (for Zahir Jaffer)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Case Files Location</div>
+                        <div class="info-value">District Courts Islamabad; Islamabad High Court Registry</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Current Status</div>
+                        <div class="info-value status-closed">Closed - Death sentence upheld, Supreme Court appeal pending</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Sentence</div>
+                        <div class="info-value">Death penalty + 10 years imprisonment (rape)</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Case 7: Sahiwal Shootout -->
+        <article class="case-card" id="case7">
+            <div class="case-top">
+                <div class="case-meta">
+                    <span class="badge badge-closed"><span class="badge-dot"></span>Closed</span>
+                    <span class="case-year">2019</span>
+                </div>
+                <span class="case-number">Case 07</span>
+            </div>
+            <div class="case-body">
+                <h3 class="case-title">Sahiwal Shootout Case</h3>
+                <p class="case-subtitle">Police Extrajudicial Killings | Sahiwal, Punjab, Pakistan</p>
+                <div class="case-content">
+                    <p>On January 19, 2019, Counter Terrorism Department (CTD) personnel killed four people including a couple and their teenage daughter in a "shootout" on the GT Road near Sahiwal. The victims were Khalil Ahmed, his wife Nabeela, their 17-year-old daughter Areeba, and their neighbor Zeeshan. Two other children, Umair (7) and Muneeba (9), survived by hiding and later provided crucial eyewitness testimony contradicting the official police narrative.</p>
+                    <p>The CTD initially claimed the victims were terrorists, but the surviving children's account and video evidence showed it was a cold-blooded murder. The victims were actually a family traveling with their children, and Khalil was a small business owner. The case exposed the practice of fake police encounters in Pakistan. The Joint Investigation Team (JIT) found the CTD officials guilty of murder. Five CTD officials were convicted and sentenced to death/life imprisonment.</p>
+                    <p><strong>Impact on Human Life:</strong> The Sahiwal shootout case exposed the dangerous practice of extrajudicial killings by law enforcement in Pakistan. It led to nationwide protests against police brutality and demands for police reforms. The case resulted in changes to CTD operations, increased judicial oversight of police encounters, and greater public scrutiny of law enforcement. It highlighted the importance of eyewitness testimony, including that of children, in bringing justice. The case remains a landmark in Pakistan's human rights jurisprudence.</p>
+                </div>
+            </div>
+            <div class="case-footer">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Court</div>
+                        <div class="info-value">Anti-Terrorism Court (ATC), Sahiwal; Lahore High Court</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Investigation</div>
+                        <div class="info-value">Joint Investigation Team (JIT) headed by DIG Usman Anwar</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Defense Attorneys</div>
+                        <div class="info-value">Rana Intizar Hussain, Shehbaz Bhatti (CTD officials' counsel)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Case Files Location</div>
+                        <div class="info-value">ATC Archives Sahiwal; Lahore High Court Registry</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Current Status</div>
+                        <div class="info-value status-closed">Closed - 5 CTD officials convicted, appeals pending</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Victims</div>
+                        <div class="info-value">4 killed (Khalil, Nabeela, Areeba, Zeeshan); 2 children survived</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Case 8: Sialkot Motorway -->
+        <article class="case-card" id="case8">
+            <div class="case-top">
+                <div class="case-meta">
+                    <span class="badge badge-ongoing"><span class="badge-dot"></span>Ongoing</span>
+                    <span class="case-year">2020-Present</span>
+                </div>
+                <span class="case-number">Case 08</span>
+            </div>
+            <div class="case-body">
+                <h3 class="case-title">Sialkot Motorway Gang Rape Case</h3>
+                <p class="case-subtitle">Highway Sexual Assault | Lahore-Sialkot Motorway M-11, Pakistan</p>
+                <div class="case-content">
+                    <p>On September 9, 2020, a woman traveling with her two children was gang-raped by armed men on the Lahore-Sialkot Motorway (M-11) after her car ran out of fuel near Gujjarpura. The incident occurred at night when the woman called for help but was instead attacked by multiple assailants in front of her children. The victim, a French-Pakistani national, was returning from a family visit. The case triggered massive public outrage across Pakistan and international condemnation.</p>
+                    <p>Two main suspects, Abid Malhi and Waqarul Hasan, were arrested after an extensive manhunt involving Punjab Police, FIA, and intelligence agencies. Abid Malhi was a notorious criminal with prior records. The case was fast-tracked due to public pressure. The Anti-Terrorism Court in Lahore conducted the trial, and in March 2021, sentenced both convicts to death and life imprisonment on multiple counts. However, appeals are currently pending in the Lahore High Court.</p>
+                    <p><strong>Impact on Human Life:</strong> This horrific case led to widespread protests demanding stricter laws against rape and better safety measures on highways. It resulted in the Anti-Rape (Investigation and Trial) Act, 2021, which established special courts for rape cases, created anti-rape crisis cells, and mandated DNA testing within 24 hours. The case exposed critical gaps in highway safety, emergency response systems, and the treatment of sexual violence survivors. It brought international attention to violence against women in Pakistan and led to the establishment of the National Emergency Helpline 15.</p>
+                </div>
+            </div>
+            <div class="case-footer">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">Court</div>
+                        <div class="info-value">Anti-Terrorism Court (ATC), Lahore; Lahore High Court (Appeals)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Prosecution</div>
+                        <div class="info-value">Punjab Prosecution Department, FIA (Federal Investigation Agency)</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Defense Attorneys</div>
+                        <div class="info-value">Court-appointed counsel for Abid Malhi and Waqarul Hasan</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Case Files Location</div>
+                        <div class="info-value">ATC Lahore Archives; Lahore High Court Registry</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Current Status</div>
+                        <div class="info-value status-ongoing">Appeals Pending in Lahore High Court</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Legislation</div>
+                        <div class="info-value">Anti-Rape (Investigation and Trial) Act, 2021</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="footer-logo">Muhammad Younis</p>
+        <p class="footer-detail">BS Criminology - 1st Year - Semester 1</p>
+        <p class="footer-detail">Research Writing Assignment</p>
+        <p class="footer-detail" style="margin-top: 16px; color: var(--accent-emerald);">8 Rare Criminal Cases Analysis</p>
+    </footer>
+
+    <script>
+        // Mobile Navigation
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+
+        function toggleMobile() {
+            hamburger.classList.toggle('open');
+            mobileNav.classList.toggle('open');
+            document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
+        }
+
+        function closeMobile() {
+            hamburger.classList.remove('open');
+            mobileNav.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // Scroll Progress Bar
+        const scrollBar = document.getElementById('scrollBar');
+
+        function updateScroll() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollBar.style.width = scrollPercent + '%';
+        }
+
+        // Reveal Animation
+        const caseCards = document.querySelectorAll('.case-card');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+        caseCards.forEach(card => observer.observe(card));
+
+        // Active Navigation
+        const sections = document.querySelectorAll('section, .hero-section');
+        const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
+
+        function updateActiveNav() {
+            let current = '';
+            const scrollPos = window.scrollY + 150;
+
+            sections.forEach(section => {
+                const top = section.offsetTop;
+                const height = section.offsetHeight;
+                if (scrollPos >= top && scrollPos < top + height) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                if (href === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    window.scrollTo({
+                        top: target.offsetTop - offset,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Event Listeners
+        window.addEventListener('scroll', () => {
+            updateScroll();
+            updateActiveNav();
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 1024) {
+                closeMobile();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileNav.classList.contains('open')) {
+                closeMobile();
+            }
+        });
+
+        // Initial calls
+        updateScroll();
+        updateActiveNav();
+    </script>
+</body>
+</html>
