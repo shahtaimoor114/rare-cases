@@ -32,6 +32,11 @@
             scroll-behavior: smooth;
         }
 
+        /* Fix for fixed header covering content on anchor jump */
+        #title, #case1, #case2, #case3, #case4, #case5, #case8, #international, #national {
+            scroll-margin-top: 80px;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg-deep);
@@ -158,25 +163,12 @@
             background: rgba(255, 255, 255, 0.03);
         }
 
-        .nav-link.active {
-            color: var(--accent-emerald);
-            background: rgba(16, 185, 129, 0.1);
+        /* Hide Checkbox */
+        .nav-toggle {
+            display: none;
         }
 
-        .nav-link.active::after {
-            content: '';
-            display: block;
-            position: absolute;
-            bottom: -1px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 16px;
-            height: 2px;
-            background: var(--accent-emerald);
-            border-radius: 2px;
-        }
-
-        /* Mobile Toggle */
+        /* Hamburger Button (Label) */
         .hamburger {
             display: none;
             width: 44px;
@@ -206,20 +198,7 @@
             transform-origin: center;
         }
 
-        .hamburger.open span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .hamburger.open span:nth-child(2) {
-            opacity: 0;
-            transform: scaleX(0);
-        }
-
-        .hamburger.open span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-        }
-
-        /* Mobile Navigation */
+        /* Mobile Navigation Logic (CSS Only) */
         .mobile-nav {
             position: fixed;
             top: 64px;
@@ -234,10 +213,26 @@
             transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .mobile-nav.open {
+        /* When checkbox is checked, show mobile nav */
+        .nav-toggle:checked ~ .mobile-nav {
             transform: translateX(0);
         }
 
+        /* Animate hamburger to X when checked */
+        .nav-toggle:checked ~ .navbar .hamburger span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .nav-toggle:checked ~ .navbar .hamburger span:nth-child(2) {
+            opacity: 0;
+            transform: scaleX(0);
+        }
+        .nav-toggle:checked ~ .navbar .hamburger span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Prevent body scroll when menu is open - requires specific HTML structure support or :has */
+        /* Since we can't use :has easily on body without html support, we rely on transform on the menu */
+        
         .mobile-section-title {
             font-size: 10px;
             text-transform: uppercase;
@@ -270,12 +265,6 @@
             color: var(--text-bright);
         }
 
-        .mobile-nav-link.active {
-            border-color: var(--accent-emerald);
-            background: rgba(16, 185, 129, 0.1);
-            color: var(--accent-emerald);
-        }
-
         .case-num-mini {
             width: 28px;
             height: 28px;
@@ -289,7 +278,7 @@
             color: var(--accent-emerald);
         }
 
-        /* Title Section */
+        /* Hero Section */
         .hero-section {
             min-height: 100vh;
             display: flex;
@@ -319,8 +308,7 @@
             letter-spacing: 2px;
             color: var(--accent-emerald);
             margin-bottom: 28px;
-            opacity: 0;
-            transform: translateY(20px);
+            /* Animation on load */
             animation: fadeUp 0.6s ease forwards;
         }
 
@@ -331,8 +319,6 @@
             color: var(--text-bright);
             line-height: 1.1;
             margin-bottom: 16px;
-            opacity: 0;
-            transform: translateY(30px);
             animation: fadeUp 0.7s ease 0.1s forwards;
         }
 
@@ -340,12 +326,14 @@
             font-size: 18px;
             color: var(--text-dim);
             margin-bottom: 48px;
-            opacity: 0;
-            transform: translateY(30px);
             animation: fadeUp 0.7s ease 0.2s forwards;
         }
 
         @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -358,8 +346,6 @@
             border-radius: 16px;
             overflow: hidden;
             text-align: left;
-            opacity: 0;
-            transform: translateY(30px);
             animation: fadeUp 0.7s ease 0.3s forwards;
         }
 
@@ -415,8 +401,6 @@
             border: 1px solid rgba(245, 158, 11, 0.15);
             border-radius: 12px;
             text-align: center;
-            opacity: 0;
-            transform: translateY(30px);
             animation: fadeUp 0.7s ease 0.4s forwards;
         }
 
@@ -476,21 +460,14 @@
             margin: 0 auto;
         }
 
-        /* Case Cards */
+        /* Case Cards - Visible by default */
         .case-card {
             background: var(--bg-elevated);
             border: 1px solid var(--border-subtle);
             border-radius: 16px;
             overflow: hidden;
             margin-bottom: 32px;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 0.5s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .case-card.visible {
-            opacity: 1;
-            transform: translateY(0);
+            transition: all 0.3s ease;
         }
 
         .case-card:hover {
@@ -763,24 +740,14 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--text-dim);
         }
-
-        /* Scroll Progress */
-        .scroll-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-emerald), var(--accent-teal));
-            z-index: 1001;
-            width: 0%;
-            transition: width 0.1s linear;
-        }
     </style>
 </head>
 <body>
     <div class="bg-atmosphere"></div>
     <div class="bg-grid"></div>
-    <div class="scroll-bar" id="scrollBar"></div>
+
+    <!-- Hidden Checkbox for Mobile Toggle Logic -->
+    <input type="checkbox" id="nav-toggle" class="nav-toggle">
 
     <!-- Navigation -->
     <nav class="navbar">
@@ -797,53 +764,52 @@
             </a>
 
             <div class="nav-menu">
-                <a href="#title" class="nav-link active">Home</a>
+                <a href="#title" class="nav-link">Home</a>
                 <a href="#case1" class="nav-link">Nuremberg</a>
                 <a href="#case2" class="nav-link">Manson</a>
                 <a href="#case3" class="nav-link">Dahmer</a>
                 <a href="#case4" class="nav-link">Zainab</a>
                 <a href="#case5" class="nav-link">APS Attack</a>
-                <!-- <a href="#case6" class="nav-link">Noor Mukadam</a>
-                <a href="#case7" class="nav-link">Sahiwal</a> -->
                 <a href="#case8" class="nav-link">Motorway</a>
             </div>
 
-            <button class="hamburger" id="hamburger" onclick="toggleMobile()">
+            <!-- Label acts as button for the hidden checkbox -->
+            <label for="nav-toggle" class="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
-            </button>
+            </label>
         </div>
     </nav>
 
     <!-- Mobile Navigation -->
-    <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav">
         <div class="mobile-section-title">International Cases</div>
-        <a href="#case1" class="mobile-nav-link" onclick="closeMobile()">
+        <a href="#case1" class="mobile-nav-link">
             <span class="case-num-mini">01</span>
             Nuremberg Trials
         </a>
-        <a href="#case2" class="mobile-nav-link" onclick="closeMobile()">
+        <a href="#case2" class="mobile-nav-link">
             <span class="case-num-mini">02</span>
             Charles Manson Murders
         </a>
-        <a href="#case3" class="mobile-nav-link" onclick="closeMobile()">
+        <a href="#case3" class="mobile-nav-link">
             <span class="case-num-mini">03</span>
             Jeffrey Dahmer Case
         </a>
         
         <div class="mobile-section-title">National Cases - Pakistan</div>
-        <a href="#case4" class="mobile-nav-link" onclick="closeMobile()">
+        <a href="#case4" class="mobile-nav-link">
             <span class="case-num-mini">04</span>
             Zainab Ansari Murder
         </a>
-        <a href="#case5" class="mobile-nav-link" onclick="closeMobile()">
+        <a href="#case5" class="mobile-nav-link">
             <span class="case-num-mini">05</span>
             APS Peshawar Attack
         </a>
         
-        <a href="#case8" class="mobile-nav-link" onclick="closeMobile()">
-            <span class="case-num-mini">08</span>
+        <a href="#case8" class="mobile-nav-link">
+            <span class="case-num-mini">06</span>
             Sialkot Motorway
         </a>
     </div>
@@ -1169,103 +1135,7 @@
             </div>
         </article>
 
-        <!-- Case 6: Noor Mukadam -->
-        <!-- <article class="case-card" id="case6">
-            <div class="case-top">
-                <div class="case-meta">
-                    <span class="badge badge-closed"><span class="badge-dot"></span>Closed</span>
-                    <span class="case-year">2021-2022</span>
-                </div>
-                <span class="case-number">Case 06</span>
-            </div>
-            <div class="case-body">
-                <h3 class="case-title">Noor Mukadam Murder Case</h3>
-                <p class="case-subtitle">High-Profile Beheading Murder | Islamabad, Pakistan</p>
-                <div class="case-content">
-                    <p>Noor Mukadam, the 27-year-old daughter of former Pakistani diplomat Shaukat Mukadam, was brutally murdered on July 20, 2021, in Islamabad. She was beheaded with a sharp instrument at the residence of Zahir Jaffer, a Pakistani-American man from an influential family. Jaffer had held Noor hostage for two days before killing her when she attempted to escape. The case shocked the nation due to its brutality and the privileged background of the perpetrator.</p>
-                    <p>Zahir Jaffer was arrested at the crime scene. The trial was fast-tracked due to immense public pressure and media attention. In February 2022, an Additional Sessions Judge sentenced Zahir Jaffer to death for murder and 10 years imprisonment for rape. His parents and three employees were also convicted for abetment and evidence tampering. The Islamabad High Court upheld the death sentence in March 2023. Appeals are currently pending in the Supreme Court of Pakistan.</p>
-                    <p><strong>Impact on Human Life:</strong> The Noor Mukadam case brought national attention to violence against women in Pakistan and the issue of privilege and influence in the justice system. It led to increased demands for stronger domestic violence laws and better protection for women. The case demonstrated that even influential families cannot escape justice. It sparked nationwide protests and the "Justice for Noor" movement, leading to greater awareness about femicide and the need for legal reforms to protect women from gender-based violence.</p>
-                </div>
-            </div>
-            <div class="case-footer">
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label">Court</div>
-                        <div class="info-value">Additional Sessions Court, Islamabad; Islamabad High Court</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Prosecution</div>
-                        <div class="info-value">Shah Khawar (Additional Advocate General), Sajid Cheema (FIA)</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Defense Attorneys</div>
-                        <div class="info-value">Sikandar Zulqarnain Salam, Shah Nawaz Ismail (for Zahir Jaffer)</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Case Files Location</div>
-                        <div class="info-value">District Courts Islamabad; Islamabad High Court Registry</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Current Status</div>
-                        <div class="info-value status-closed">Closed - Death sentence upheld, Supreme Court appeal pending</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Sentence</div>
-                        <div class="info-value">Death penalty + 10 years imprisonment (rape)</div>
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        <!-- Case 7: Sahiwal Shootout 
-        <article class="case-card" id="case7">
-            <div class="case-top">
-                <div class="case-meta">
-                    <span class="badge badge-closed"><span class="badge-dot"></span>Closed</span>
-                    <span class="case-year">2019</span>
-                </div>
-                <span class="case-number">Case 07</span>
-            </div>
-            <div class="case-body">
-                <h3 class="case-title">Sahiwal Shootout Case</h3>
-                <p class="case-subtitle">Police Extrajudicial Killings | Sahiwal, Punjab, Pakistan</p>
-                <div class="case-content">
-                    <p>On January 19, 2019, Counter Terrorism Department (CTD) personnel killed four people including a couple and their teenage daughter in a "shootout" on the GT Road near Sahiwal. The victims were Khalil Ahmed, his wife Nabeela, their 17-year-old daughter Areeba, and their neighbor Zeeshan. Two other children, Umair (7) and Muneeba (9), survived by hiding and later provided crucial eyewitness testimony contradicting the official police narrative.</p>
-                    <p>The CTD initially claimed the victims were terrorists, but the surviving children's account and video evidence showed it was a cold-blooded murder. The victims were actually a family traveling with their children, and Khalil was a small business owner. The case exposed the practice of fake police encounters in Pakistan. The Joint Investigation Team (JIT) found the CTD officials guilty of murder. Five CTD officials were convicted and sentenced to death/life imprisonment.</p>
-                    <p><strong>Impact on Human Life:</strong> The Sahiwal shootout case exposed the dangerous practice of extrajudicial killings by law enforcement in Pakistan. It led to nationwide protests against police brutality and demands for police reforms. The case resulted in changes to CTD operations, increased judicial oversight of police encounters, and greater public scrutiny of law enforcement. It highlighted the importance of eyewitness testimony, including that of children, in bringing justice. The case remains a landmark in Pakistan's human rights jurisprudence.</p>
-                </div>
-            </div>
-            <div class="case-footer">
-                <div class="info-grid">
-                    <div class="info-item">
-                        <div class="info-label">Court</div>
-                        <div class="info-value">Anti-Terrorism Court (ATC), Sahiwal; Lahore High Court</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Investigation</div>
-                        <div class="info-value">Joint Investigation Team (JIT) headed by DIG Usman Anwar</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Defense Attorneys</div>
-                        <div class="info-value">Rana Intizar Hussain, Shehbaz Bhatti (CTD officials' counsel)</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Case Files Location</div>
-                        <div class="info-value">ATC Archives Sahiwal; Lahore High Court Registry</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Current Status</div>
-                        <div class="info-value status-closed">Closed - 5 CTD officials convicted, appeals pending</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-label">Victims</div>
-                        <div class="info-value">4 killed (Khalil, Nabeela, Areeba, Zeeshan); 2 children survived</div>
-                    </div>
-                </div>
-            </div>
-         </article> -->
-
-        Case 8: Sialkot Motorway 
+        <!-- Case 8: Sialkot Motorway -->
         <article class="case-card" id="case8">
             <div class="case-top">
                 <div class="case-meta">
@@ -1321,108 +1191,5 @@
         <p class="footer-detail">Research Writing Assignment</p>
         <p class="footer-detail" style="margin-top: 16px; color: var(--accent-emerald);">6 Rare Criminal Cases Analysis</p>
     </footer>
-
-    <script>
-        // Mobile Navigation
-        const hamburger = document.getElementById('hamburger');
-        const mobileNav = document.getElementById('mobileNav');
-
-        function toggleMobile() {
-            hamburger.classList.toggle('open');
-            mobileNav.classList.toggle('open');
-            document.body.style.overflow = mobileNav.classList.contains('open') ? 'hidden' : '';
-        }
-
-        function closeMobile() {
-            hamburger.classList.remove('open');
-            mobileNav.classList.remove('open');
-            document.body.style.overflow = '';
-        }
-
-        // Scroll Progress Bar
-        const scrollBar = document.getElementById('scrollBar');
-
-        function updateScroll() {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = (scrollTop / docHeight) * 100;
-            scrollBar.style.width = scrollPercent + '%';
-        }
-
-        // Reveal Animation
-        const caseCards = document.querySelectorAll('.case-card');
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-
-        caseCards.forEach(card => observer.observe(card));
-
-        // Active Navigation
-        const sections = document.querySelectorAll('section, .hero-section');
-        const navLinks = document.querySelectorAll('.nav-link, .mobile-nav-link');
-
-        function updateActiveNav() {
-            let current = '';
-            const scrollPos = window.scrollY + 150;
-
-            sections.forEach(section => {
-                const top = section.offsetTop;
-                const height = section.offsetHeight;
-                if (scrollPos >= top && scrollPos < top + height) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                const href = link.getAttribute('href');
-                if (href === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
-        }
-
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const offset = 80;
-                    window.scrollTo({
-                        top: target.offsetTop - offset,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Event Listeners
-        window.addEventListener('scroll', () => {
-            updateScroll();
-            updateActiveNav();
-        });
-
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 1024) {
-                closeMobile();
-            }
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && mobileNav.classList.contains('open')) {
-                closeMobile();
-            }
-        });
-
-        // Initial calls
-        updateScroll();
-        updateActiveNav();
-    </script>
 </body>
 </html>
